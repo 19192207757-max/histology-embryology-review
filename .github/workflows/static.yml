@@ -19,19 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
-      - name: Unpack website files
+      - name: Assemble review website
         run: |
           mkdir -p public
           for part in 1 2 3 4; do
             unzip -q "site-part-${part}.zip" -d public
           done
-          cp app.js styles.css index.html public/
-          if [ -f study-interface.zip ]; then
-            unzip -oq study-interface.zip -d public
-            unzip -q study-figures.zip -d public
-            cp study-supplement.js public/
-          fi
+          unzip -oq study-interface.zip -d public
+          unzip -q study-figures.zip -d public
+          cp study-supplement.js public/
           test -s public/index.html
           test -s public/course.js
-          touch public/.nojekyll
+          test -s public/study-supplement.js
       - uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+      - uses: actions/deploy-pages@v4
+        id: deployment
