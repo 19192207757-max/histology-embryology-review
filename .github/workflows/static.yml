@@ -26,7 +26,8 @@ jobs:
             unzip -q "site-part-${part}.zip" -d public
           done
           cp app.js styles.css index.html public/
-          if grep -Fq 'study-supplement.js' index.html; then
+          if [ -f study-interface.zip ]; then
+            unzip -oq study-interface.zip -d public
             unzip -q study-figures.zip -d public
             cp study-supplement.js public/
           fi
@@ -34,8 +35,3 @@ jobs:
           test -s public/course.js
           touch public/.nojekyll
       - uses: actions/upload-pages-artifact@v4
-        with:
-          path: public
-      - uses: actions/deploy-pages@v4
-        id: deployment
-
