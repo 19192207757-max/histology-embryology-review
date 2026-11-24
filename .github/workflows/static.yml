@@ -26,6 +26,10 @@ jobs:
             unzip -q "site-part-${part}.zip" -d public
           done
           cp app.js styles.css index.html public/
+          if grep -Fq 'study-supplement.js' index.html; then
+            unzip -q study-figures.zip -d public
+            cp study-supplement.js public/
+          fi
           test -s public/index.html
           test -s public/course.js
           touch public/.nojekyll
@@ -34,3 +38,4 @@ jobs:
           path: public
       - uses: actions/deploy-pages@v4
         id: deployment
+
