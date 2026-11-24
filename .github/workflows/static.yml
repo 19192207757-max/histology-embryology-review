@@ -21,7 +21,7 @@ jobs:
           for part in 1 2 3 4; do
             unzip -q "site-part-${part}.zip" -d public
           done
-          unzip -oq study-interface.zip -d public
+          unzip -oq ppt-interface.zip -d public
           unzip -q study-figures.zip -d public
           cp study-supplement.js public/
           test -s public/index.html
